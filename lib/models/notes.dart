@@ -21,6 +21,8 @@ class Notes {
     this._content = content;
     this._remindMe = remindMe;
     this._createdTime = DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now());
+    this._updatedTime = DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now());
+    this._remindTime = "";
   }
 
   int get id => _id;
@@ -47,12 +49,35 @@ class Notes {
 
   set updatedTime(String newUpdatedTime) => this._updatedTime = newUpdatedTime;
 
-  setRemindTime(DateTime time){
+  setRemindTime(DateTime time) {
     remindTime = DateFormat('yyyy-MM-dd – kk:mm').format(time);
   }
 
-  setUpdateTime(){
+  setUpdateTime() {
     updatedTime = DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now());
   }
-}
 
+  Map<String, dynamic> toMap() {
+    var map = Map<String, dynamic>();
+    if (id != null) {
+      map["id"] = _id;
+    }
+    map["title"] = _title;
+    map["content"] = _content;
+    map["remindMe"] = _remindMe;
+    map["remindTime"] = _remindTime;
+    map["createdTime"] = _createdTime;
+    map["updatedTime"] = _updatedTime;
+    return map;
+  }
+
+  Notes.fromMapObject(Map<String, dynamic> map) {
+    this._id = map["id"];
+    this._title = map["title"];
+    this._content = map["content"];
+    this._remindMe = map["remindMe"];
+    this._remindTime = map["remindTime"];
+    this._createdTime = map["createdTime"];
+    this._updatedTime = map["updatedTime"];
+  }
+}
