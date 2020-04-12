@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:note_maker/utils/notes.dart';
 
 class MainMenu extends StatefulWidget {
   @override
@@ -6,7 +7,6 @@ class MainMenu extends StatefulWidget {
 }
 
 class _MainMenuState extends State<MainMenu> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,3 +26,4 @@ class _MainMenuState extends State<MainMenu> {
     );
   }
 }
+

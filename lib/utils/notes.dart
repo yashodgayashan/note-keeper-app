@@ -7,6 +7,8 @@ class Notes{
   bool remindMe;
   String time;
 
-  Notes({@required this.title, this.content, this.remindMe, this.time});
+
+  Notes.optional({@required this.title, this.content,this.remindMe,this.time});
+  Notes(this.title, this.content,this.remindMe,this.time);
 
 }
