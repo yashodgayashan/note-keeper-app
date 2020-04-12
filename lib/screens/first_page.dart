@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:note_maker/utils/notes.dart';
+import 'package:note_maker/models/notes.dart';
 
 class MainMenu extends StatefulWidget {
   @override
