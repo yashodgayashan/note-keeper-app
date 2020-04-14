@@ -16,6 +16,7 @@ class _MainMenuState extends State<MainMenu> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     if (noteList == null) {
       noteList = List<Note>();
       updateListView();
@@ -24,26 +25,31 @@ class _MainMenuState extends State<MainMenu> {
       appBar: AppBar(
         title: Text("Note Maker"),
       ),
-      endDrawer: Drawer(
-        child: ListView(
-          children: <Widget>[
-            DrawerHeader(
-              child: Text('Header'),
+      endDrawer: SafeArea(
+        child: Container(
+          width: width/2,
+          child: Drawer(
+            child: ListView(
+              children: <Widget>[
+                DrawerHeader(
+                  child: Text('Header'),
+                ),
+                ListTile(
+                  title: Text('First Menu Item'),
+                  onTap: () {},
+                ),
+                ListTile(
+                  title: Text('Second Menu Item'),
+                  onTap: () {},
+                ),
+                Divider(),
+                ListTile(
+                  title: Text('About'),
+                  onTap: () {},
+                ),
+              ],
             ),
-            ListTile(
-              title: Text('First Menu Item'),
-              onTap: () {},
-            ),
-            ListTile(
-              title: Text('Second Menu Item'),
-              onTap: () {},
-            ),
-            Divider(),
-            ListTile(
-              title: Text('About'),
-              onTap: () {},
-            ),
-          ],
+          ),
         ),
       ),
       body: ListView(
