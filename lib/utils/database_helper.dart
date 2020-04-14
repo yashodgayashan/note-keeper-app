@@ -46,7 +46,7 @@ class DatabaseHelper {
   void _createDb(Database db, int newVersion) async {
     await db.execute(
         "CREATE TABLE $noteTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colTitle TEXT, "
-            " $colContent TEXT, $colRemindMe INTEGER, $colRemindTime TEXT, $colRemindTime TEXT, "
+            " $colContent TEXT, $colRemindMe INTEGER, $colRemindTime TEXT, "
                 "$colCreatedTime TEXT, $colUpdatedTime TEXT )");
   }
 
@@ -82,13 +82,13 @@ class DatabaseHelper {
     return result;
   }
 
-  Future<int> insertNote(Notes note) async{
+  Future<int> insertNote(Note note) async{
     Database db = await this.database;
     var result = await db.insert(noteTable, note.toMap());
     return result;
   }
 
-  Future<int> updateNote(Notes note) async{
+  Future<int> updateNote(Note note) async{
     var db = await this.database;
     var result = await db.update(noteTable,note.toMap(),where: "$colId = ?", whereArgs: [note.id]);
     return result;
@@ -107,12 +107,12 @@ class DatabaseHelper {
     return result;
   }
 
-  Future<List<Notes>> getNoteList({String option = "created", String order="asc"}) async{
+  Future<List<Note>> getNoteList({String option = "created", String order="asc"}) async{
     var noteMapList = await getNoteMapList(option: option , order: order);
     int count = noteMapList.length;
-    List<Notes> noteList = List<Notes>();
+    List<Note> noteList = List<Note>();
     for (int i = 0; i< count; i++){
-      noteList.add(Notes.fromMapObject(noteMapList[i]));
+      noteList.add(Note.fromMapObject(noteMapList[i]));
     }
     return noteList;
   }

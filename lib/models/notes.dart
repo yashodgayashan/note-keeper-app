@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 
-class Notes {
+class Note {
   int _id;
   String _title;
   String _content;
-  bool _remindMe;
+  int _remindMe;
   String _remindTime;
   String _createdTime;
   String _updatedTime;
@@ -15,8 +15,8 @@ class Notes {
    *  it will take the title as the required parameter and other as optional.
    *  remind me value will be false default and the created time will be assigned at the created time
    */
-  Notes.createNote(
-      {@required String title, String content, bool remindMe = false}) {
+  Note.createNote(
+      {@required String title, String content, int remindMe = 0}) {
     this._title = title;
     this._content = content;
     this._remindMe = remindMe;
@@ -31,7 +31,7 @@ class Notes {
 
   String get content => _content;
 
-  bool get remindMe => _remindMe;
+  int get remindMe => _remindMe;
 
   String get remindTime => _remindTime;
 
@@ -43,7 +43,7 @@ class Notes {
 
   set content(String newContent) => this._content = newContent;
 
-  set remindMe(bool newRemindMe) => this._remindMe = newRemindMe;
+  set remindMe(int newRemindMe) => this._remindMe = newRemindMe;
 
   set remindTime(String newRemindTime) => this._remindTime = newRemindTime;
 
@@ -71,7 +71,7 @@ class Notes {
     return map;
   }
 
-  Notes.fromMapObject(Map<String, dynamic> map) {
+  Note.fromMapObject(Map<String, dynamic> map) {
     this._id = map["id"];
     this._title = map["title"];
     this._content = map["content"];
