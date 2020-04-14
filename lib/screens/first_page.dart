@@ -24,21 +24,21 @@ class _MainMenuState extends State<MainMenu> {
       appBar: AppBar(
         title: Text("Note Maker"),
       ),
-      drawer: new Drawer(
-          child: new ListView(
+      endDrawer: Drawer(
+          child: ListView(
             children: <Widget> [
-              new DrawerHeader(child: new Text('Header'),),
-              new ListTile(
-                title: new Text('First Menu Item'),
+             DrawerHeader(child: Text('Header'),),
+              ListTile(
+                title: Text('First Menu Item'),
                 onTap: () {},
               ),
-              new ListTile(
-                title: new Text('Second Menu Item'),
+               ListTile(
+                title:  Text('Second Menu Item'),
                 onTap: () {},
               ),
-              new Divider(),
-              new ListTile(
-                title: new Text('About'),
+               Divider(),
+               ListTile(
+                title:  Text('About'),
                 onTap: () {},
               ),
             ],
