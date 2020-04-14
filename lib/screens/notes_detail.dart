@@ -11,6 +11,7 @@ class _NoteDatailsState extends State<NoteDatails> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Note title"),
+
       ),
       body: Text("Hi"),
     );
