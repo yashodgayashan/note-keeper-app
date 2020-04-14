@@ -46,7 +46,7 @@ class _MainMenuState extends State<MainMenu> {
       ),
       body: ListView(
         scrollDirection: Axis.vertical,
-        children: <Widget>[Text("Add list of items Here")],
+        children: <Widget>[Text("Add list of items Here"),Text("Add list of items Here")],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
