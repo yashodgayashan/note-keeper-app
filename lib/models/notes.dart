@@ -9,6 +9,7 @@ class Note {
   String _remindTime;
   String _createdTime;
   String _updatedTime;
+  int label;
 
   /**
    *  Using Notes.createNotes named constructor will be used when a note is created.
