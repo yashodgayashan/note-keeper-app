@@ -8,8 +8,7 @@ class NoteDatails extends StatefulWidget {
 class _NoteDatailsState extends State<NoteDatails> {
   @override
   Widget build(BuildContext context) {
-    final bool showFab = MediaQuery.of(context).viewInsets.bottom==0.0;
-    return Scaffold(
+    return Scaffold(resizeToAvoidBottomPadding:false,
       body: ListView(
         children: <Widget>[
           Row(
@@ -81,7 +80,7 @@ class _NoteDatailsState extends State<NoteDatails> {
           ),
         ],
       ),
-      floatingActionButton: showFab?Column(
+      floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Transform.scale(
@@ -108,7 +107,7 @@ class _NoteDatailsState extends State<NoteDatails> {
             ),
           ),
         ],
-      ):null,
+      ),
     );
   }
 }
