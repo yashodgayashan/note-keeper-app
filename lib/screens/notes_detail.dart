@@ -14,7 +14,6 @@ class _NoteDatailsState extends State<NoteDatails> {
       ),
       body: ListView(
         children: <Widget>[
-
           Row(
             children: <Widget>[
               Expanded(
@@ -40,21 +39,20 @@ class _NoteDatailsState extends State<NoteDatails> {
               ),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.all(2.0),
+                  padding: const EdgeInsets.all(3.0),
                   child: OutlineButton(
-                      onPressed: () {},
-                      child: Icon(
-                        Icons.priority_high,
-                        color: Colors.red,
-                      ),
+                    onPressed: () {},
+                    child: Icon(
+                      Icons.priority_high,
+                      color: Colors.red,
+                    ),
                     shape: StadiumBorder(),
                   ),
                 ),
-
               ),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.all(2.0),
+                  padding: const EdgeInsets.all(3.0),
                   child: OutlineButton(
                     onPressed: () {},
                     child: Icon(
@@ -64,7 +62,6 @@ class _NoteDatailsState extends State<NoteDatails> {
                     shape: StadiumBorder(),
                   ),
                 ),
-
               ),
             ],
           ),
@@ -82,6 +79,34 @@ class _NoteDatailsState extends State<NoteDatails> {
                     fontWeight: FontWeight.w500),
                 border: InputBorder.none,
               ),
+            ),
+          ),
+        ],
+      ),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Transform.scale(
+            scale: 0.9,
+            child: FloatingActionButton(
+              child: Icon(
+                Icons.delete,
+              ),
+              backgroundColor: Colors.red,
+              onPressed: () {},
+            ),
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Transform.scale(
+            scale: 1.2,
+            child: FloatingActionButton(
+              child: Icon(
+                Icons.save,
+              ),
+              backgroundColor: Colors.blue,
+              onPressed: () => {},
             ),
           ),
         ],
