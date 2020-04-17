@@ -3,6 +3,7 @@ import 'package:note_maker/utils/database_helper.dart';
 import 'package:note_maker/models/notes.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
+import 'package:note_maker/screens/notes_detail.dart';
 
 class MainMenu extends StatefulWidget {
   @override
@@ -27,7 +28,7 @@ class _MainMenuState extends State<MainMenu> {
       ),
       endDrawer: SafeArea(
         child: Container(
-          width: width/2,
+          width: width / 2,
           child: Drawer(
             child: ListView(
               children: <Widget>[
@@ -60,10 +61,13 @@ class _MainMenuState extends State<MainMenu> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
         onPressed: () {
           debugPrint("Button clicked");
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return NoteDatails();
+          }));
         },
-        child: Icon(Icons.add),
       ),
     );
   }
