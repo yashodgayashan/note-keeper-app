@@ -9,7 +9,7 @@ class Note {
   String _remindTime;
   String _createdTime;
   String _updatedTime;
-  String _category;
+  int _category;
 
   /**
    *  Using Notes.createNotes named constructor will be used when a note is created.
@@ -17,7 +17,7 @@ class Note {
    *  remind me value will be false default and the created time will be assigned at the created time
    */
   Note.createNote(
-      {@required String title, String content, int remindMe = 0, String remindTime, String category}) {
+      {@required String title, String content, int remindMe = 0, String remindTime, int category}) {
     this._title = title;
     this._content = content;
     this._remindMe = remindMe;
@@ -41,7 +41,7 @@ class Note {
 
   String get updatedTime => _updatedTime;
 
-  String get category => _category;
+  int get category => _category;
 
   set title(String newTitle) => this._title = newTitle;
 
@@ -53,7 +53,7 @@ class Note {
 
   set updatedTime(String newUpdatedTime) => this._updatedTime = newUpdatedTime;
 
-  set category(String newCategory) => this._category = newCategory;
+  set category(int newCategory) => this._category = newCategory;
 
   setRemindTime(DateTime time) {
     remindTime = DateFormat('yyyy-MM-dd – kk:mm').format(time);

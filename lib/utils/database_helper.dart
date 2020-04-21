@@ -51,7 +51,7 @@ class DatabaseHelper {
     await db.execute(
         "CREATE TABLE $noteTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colTitle TEXT, "
         " $colContent TEXT, $colRemindMe INTEGER, $colRemindTime TEXT, "
-        "$colCreatedTime TEXT, $colUpdatedTime TEXT, $colCategory TEXT )");
+        "$colCreatedTime TEXT, $colUpdatedTime TEXT, $colCategory INTEGER )");
     await db.execute(
         "CREATE TABLE $categoryTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colName TEXT, $colColor TEXT)");
   }
@@ -155,11 +155,11 @@ class DatabaseHelper {
   }
 
   Future<List<Category>> getCategoryList() async {
-    var CategoryMapList = await getCategoryMapList();
-    int count = CategoryMapList.length;
+    var categoryMapList = await getCategoryMapList();
+    int count = categoryMapList.length;
     List<Category> categoryList = List<Category>();
     for (int i = 0; i < count; i++) {
-      categoryList.add(Category.fromMapObject(CategoryMapList[i]));
+      categoryList.add(Category.fromMapObject(categoryMapList[i]));
     }
     return categoryList;
   }
