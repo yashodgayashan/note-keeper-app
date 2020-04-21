@@ -17,6 +17,7 @@ class DatabaseHelper {
   String colRemindTime = "remindTime";
   String colCreatedTime = "createdTime";
   String colUpdatedTime = "updatedTime";
+  String colCategory = "category";
 
   DatabaseHelper._createDataBase(); // Named constructor to create instance of DatabaseHelper
 
@@ -47,7 +48,7 @@ class DatabaseHelper {
     await db.execute(
         "CREATE TABLE $noteTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colTitle TEXT, "
             " $colContent TEXT, $colRemindMe INTEGER, $colRemindTime TEXT, "
-                "$colCreatedTime TEXT, $colUpdatedTime TEXT )");
+                "$colCreatedTime TEXT, $colUpdatedTime TEXT, $colCategory TEXT )");
   }
 
   Future<List<Map<String, dynamic>>> getNoteMapList({String option = "created", String order="asc"}) async{
