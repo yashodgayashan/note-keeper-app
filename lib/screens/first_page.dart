@@ -25,18 +25,7 @@ class _MainMenuState extends State<MainMenu> {
     }
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBar(
-        title: Text("Note Maker"),
-        leading: IconButton(
-          icon: Icon(Icons.menu),
-          onPressed: () => _scaffoldKey.currentState.openDrawer(),
-        ),
-        actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.filter_list),
-              onPressed: () => _scaffoldKey.currentState.openEndDrawer())
-        ],
-      ),
+      appBar: getAppBar(),
       endDrawer: getEndDrawer(width),
       drawer: getDrawer(width),
       body: ListView(
@@ -46,19 +35,55 @@ class _MainMenuState extends State<MainMenu> {
           Text("Add list of items Here")
         ],
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          debugPrint("Button clicked");
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return NoteDatails();
-          }));
-        },
+          child: const Icon(Icons.add),
+          onPressed: () {
+            debugPrint("Button clicked");
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return NoteDatails();
+            }));
+          }),
+      bottomNavigationBar: BottomAppBar(
+        shape: CircularNotchedRectangle(),
+        notchMargin: 4.0,
+        child: new Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Expanded(
+                child: TextFormField(
+              decoration: InputDecoration(
+                  labelText: "Search", prefixIcon: Icon(Icons.search)),
+            ))
+          ],
+        ),
       ),
     );
   }
 
-  Widget getEndDrawer(double width){
+  Widget getAppBar() {
+    return AppBar(
+      title: Text("Note Maker"),
+      leading: getAppBarLeadingIcon(),
+      actions: <Widget>[getAppBarEndIcon()],
+    );
+  }
+
+  Widget getAppBarLeadingIcon() {
+    return IconButton(
+      icon: Icon(Icons.menu),
+      onPressed: () => _scaffoldKey.currentState.openDrawer(),
+    );
+  }
+
+  Widget getAppBarEndIcon() {
+    return IconButton(
+        icon: Icon(Icons.filter_list),
+        onPressed: () => _scaffoldKey.currentState.openEndDrawer());
+  }
+
+  Widget getEndDrawer(double width) {
     return SafeArea(
       child: Container(
         width: width / 2,
@@ -88,7 +113,7 @@ class _MainMenuState extends State<MainMenu> {
     );
   }
 
-  Widget getDrawer(double width){
+  Widget getDrawer(double width) {
     return SafeArea(
       child: Container(
         width: width / 2,
@@ -117,6 +142,7 @@ class _MainMenuState extends State<MainMenu> {
       ),
     );
   }
+
   void updateListView() {
     final Future<Database> dbFuture = databaseHelper.initializeDatabase();
     dbFuture.then((database) {
