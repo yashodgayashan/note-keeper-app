@@ -11,6 +11,7 @@ class MainMenu extends StatefulWidget {
 }
 
 class _MainMenuState extends State<MainMenu> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   DatabaseHelper databaseHelper = DatabaseHelper();
   List<Note> noteList;
   int count = 0;
@@ -23,36 +24,21 @@ class _MainMenuState extends State<MainMenu> {
       updateListView();
     }
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text("Note Maker"),
-      ),
-      endDrawer: SafeArea(
-        child: Container(
-          width: width / 2,
-          child: Drawer(
-            child: ListView(
-              children: <Widget>[
-                DrawerHeader(
-                  child: Text('Header'),
-                ),
-                ListTile(
-                  title: Text('First Menu Item'),
-                  onTap: () {},
-                ),
-                ListTile(
-                  title: Text('Second Menu Item'),
-                  onTap: () {},
-                ),
-                Divider(),
-                ListTile(
-                  title: Text('About'),
-                  onTap: () {},
-                ),
-              ],
-            ),
-          ),
+        leading: IconButton(
+          icon: Icon(Icons.menu),
+          onPressed: () => _scaffoldKey.currentState.openDrawer(),
         ),
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.filter_list),
+              onPressed: () => _scaffoldKey.currentState.openEndDrawer())
+        ],
       ),
+      endDrawer: getEndDrawer(width),
+      drawer: getDrawer(width),
       body: ListView(
         scrollDirection: Axis.vertical,
         children: <Widget>[
@@ -72,6 +58,65 @@ class _MainMenuState extends State<MainMenu> {
     );
   }
 
+  Widget getEndDrawer(double width){
+    return SafeArea(
+      child: Container(
+        width: width / 2,
+        child: Drawer(
+          child: ListView(
+            children: <Widget>[
+              DrawerHeader(
+                child: Text('Header'),
+              ),
+              ListTile(
+                title: Text('First Menu Item'),
+                onTap: () {},
+              ),
+              ListTile(
+                title: Text('Second Menu Item'),
+                onTap: () {},
+              ),
+              Divider(),
+              ListTile(
+                title: Text('About'),
+                onTap: () {},
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget getDrawer(double width){
+    return SafeArea(
+      child: Container(
+        width: width / 2,
+        child: Drawer(
+          child: ListView(
+            children: <Widget>[
+              DrawerHeader(
+                child: Text('Header'),
+              ),
+              ListTile(
+                title: Text('First Menu Item'),
+                onTap: () {},
+              ),
+              ListTile(
+                title: Text('Second Menu Item'),
+                onTap: () {},
+              ),
+              Divider(),
+              ListTile(
+                title: Text('About'),
+                onTap: () {},
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
   void updateListView() {
     final Future<Database> dbFuture = databaseHelper.initializeDatabase();
     dbFuture.then((database) {
