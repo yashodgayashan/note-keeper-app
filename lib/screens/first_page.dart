@@ -52,7 +52,7 @@ class _MainMenuState extends State<MainMenu> {
     return Container(
       margin: EdgeInsets.all(5.0),
       decoration: BoxDecoration(
-        border: Border.all(),
+        border: Border.all(color: Colors.grey[400]),
         borderRadius: BorderRadius.all(
             Radius.circular(10.0) //         <--- border radius here
             ),
@@ -60,18 +60,18 @@ class _MainMenuState extends State<MainMenu> {
       child: ListTile(
         title: Text(title),
         leading: IconButton(
-          icon: Icon(Icons.book),
+          alignment: Alignment.centerLeft,
+          padding: EdgeInsets.all(0.0),
+          icon:Icon(Icons.book),
           color: color,
-          onPressed: () {
-            debugPrint("$title clicked");
-          },
+          onPressed: (){debugPrint("$title clicked");},
         ),
         trailing: IconButton(
-          icon: Icon(Icons.delete_outline),
+          alignment: Alignment.centerRight,
+          padding: EdgeInsets.all(0.0),
+          icon:Icon(Icons.delete_outline),
           color: Colors.red,
-          onPressed: () {
-            debugPrint("$title deleted");
-          },
+          onPressed: (){debugPrint("$title deleted");},
         ),
       ),
     );
