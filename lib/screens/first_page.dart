@@ -28,35 +28,50 @@ class _MainMenuState extends State<MainMenu> {
       appBar: getAppBar(),
       endDrawer: getEndDrawer(width),
       drawer: getDrawer(width),
-      body: ListView(
-        scrollDirection: Axis.vertical,
-        children: <Widget>[
-          Text("Add list of items Here"),
-          Text("Add list of items Here")
-        ],
-      ),
+      body: getBody(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.add),
+      floatingActionButton: getFloatingActionButton(),
+      bottomNavigationBar: getBottomNavigationBar(),
+    );
+  }
+
+  Widget getBody() {
+    return ListView(
+      scrollDirection: Axis.vertical,
+      children: <Widget>[
+        getListItem(title: "Note one", color: Colors.green),
+        getListItem(title: "Note two", color: Colors.yellow)
+      ],
+    );
+  }
+
+  Widget getListItem({
+    String title,
+    Color color,
+  }) {
+    return Container(
+      margin: EdgeInsets.all(5.0),
+      decoration: BoxDecoration(
+        border: Border.all(),
+        borderRadius: BorderRadius.all(
+            Radius.circular(10.0) //         <--- border radius here
+            ),
+      ),
+      child: ListTile(
+        title: Text(title),
+        leading: IconButton(
+          icon: Icon(Icons.book),
+          color: color,
           onPressed: () {
-            debugPrint("Button clicked");
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return NoteDatails();
-            }));
-          }),
-      bottomNavigationBar: BottomAppBar(
-        shape: CircularNotchedRectangle(),
-        notchMargin: 4.0,
-        child: new Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Expanded(
-                child: TextFormField(
-              decoration: InputDecoration(
-                  labelText: "Search", prefixIcon: Icon(Icons.search)),
-            ))
-          ],
+            debugPrint("$title clicked");
+          },
+        ),
+        trailing: IconButton(
+          icon: Icon(Icons.delete_outline),
+          color: Colors.red,
+          onPressed: () {
+            debugPrint("$title deleted");
+          },
         ),
       ),
     );
@@ -141,6 +156,35 @@ class _MainMenuState extends State<MainMenu> {
         ),
       ),
     );
+  }
+
+  Widget getBottomNavigationBar() {
+    return BottomAppBar(
+      shape: CircularNotchedRectangle(),
+      notchMargin: 4.0,
+      child: new Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Expanded(
+              child: TextFormField(
+            decoration: InputDecoration(
+                labelText: "Search", prefixIcon: Icon(Icons.search)),
+          ))
+        ],
+      ),
+    );
+  }
+
+  Widget getFloatingActionButton() {
+    return FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () {
+          debugPrint("Button clicked");
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return NoteDatails();
+          }));
+        });
   }
 
   void updateListView() {
