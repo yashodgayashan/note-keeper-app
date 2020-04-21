@@ -39,16 +39,13 @@ class _MainMenuState extends State<MainMenu> {
     return ListView(
       scrollDirection: Axis.vertical,
       children: <Widget>[
-        getListItem(title: "Note one", color: Colors.green),
-        getListItem(title: "Note two", color: Colors.yellow)
+        getListItem(title: "Note one", color: Colors.green, date: "2020-04-17"),
+        getListItem(title: "Note two", color: Colors.yellow, date: "2020-04-19")
       ],
     );
   }
 
-  Widget getListItem({
-    String title,
-    Color color,
-  }) {
+  Widget getListItem({String title, Color color, String date}) {
     return Container(
       margin: EdgeInsets.all(5.0),
       decoration: BoxDecoration(
@@ -58,20 +55,31 @@ class _MainMenuState extends State<MainMenu> {
             ),
       ),
       child: ListTile(
-        title: Text(title),
+        title: Align(
+          child: Text(title),
+          alignment: Alignment(-1.2, 0),
+        ),
+        subtitle: Align(
+          child: Text("Date : $date"),
+          alignment: Alignment(-1.27, 0),
+        ),
         leading: IconButton(
           alignment: Alignment.centerLeft,
           padding: EdgeInsets.all(0.0),
-          icon:Icon(Icons.book),
+          icon: Icon(Icons.book),
           color: color,
-          onPressed: (){debugPrint("$title clicked");},
+          onPressed: () {
+            debugPrint("$title clicked");
+          },
         ),
         trailing: IconButton(
           alignment: Alignment.centerRight,
           padding: EdgeInsets.all(0.0),
-          icon:Icon(Icons.delete_outline),
+          icon: Icon(Icons.delete_outline),
           color: Colors.red,
-          onPressed: (){debugPrint("$title deleted");},
+          onPressed: () {
+            debugPrint("$title deleted");
+          },
         ),
       ),
     );
