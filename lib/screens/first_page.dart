@@ -139,13 +139,11 @@ class _MainMenuState extends State<MainMenu> {
   Widget getDrawer(double width) {
     return SafeArea(
       child: Container(
-        width: width / 2,
+        width: (3 * width) / 4,
         child: Drawer(
           child: ListView(
             children: <Widget>[
-              DrawerHeader(
-                child: Text('Header'),
-              ),
+              getLeftDrawerHeader(),
               ListTile(
                 title: Text('First Menu Item'),
                 onTap: () {},
@@ -154,17 +152,50 @@ class _MainMenuState extends State<MainMenu> {
                 title: Text('Second Menu Item'),
                 onTap: () {},
               ),
-              Divider(),
-              ListTile(
-                title: Text('About'),
-                onTap: () {},
-              ),
             ],
           ),
         ),
       ),
     );
   }
+
+  Widget getLeftDrawerHeader() {
+    return DrawerHeader(
+      child: Column(
+        children: <Widget>[
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              child: Text(
+                'Labels',
+                textScaleFactor: 1.5,
+                textAlign: TextAlign.left,
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 10.0,
+          ),
+          Align(
+            child: Container(
+              child: Text(
+                "Organize your notes with labels \nIt is super easy with note maker "
+                "\nMake your notes and labels them \nCategorize your notes with labels "
+                "\nEasy to manage, search and organize  ",
+                style: TextStyle(fontWeight: FontWeight.w300),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            alignment: Alignment.center,
+          ),
+        ],
+      ),
+      decoration: BoxDecoration(
+        color: Colors.blue,
+      ),
+    );
+  }
+
 
   Widget getBottomNavigationBar() {
     return BottomAppBar(
