@@ -139,30 +139,90 @@ class _MainMenuState extends State<MainMenu> {
   Widget getDrawer(double width) {
     return SafeArea(
       child: Container(
-        width: width / 2,
+        width: (3 * width) / 4,
         child: Drawer(
-          child: ListView(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
             children: <Widget>[
-              DrawerHeader(
-                child: Text('Header'),
+              getLeftDrawerHeader(),
+              Container(
+                height: 100.0,
+                child: ListView(
+                  children: <Widget>[
+                    getLeftDrawerListTile(
+                        title: "First label", color: Colors.yellow),
+                    getLeftDrawerListTile(
+                        title: "Secont label", color: Colors.blue),
+                  ],
+                ),
               ),
-              ListTile(
-                title: Text('First Menu Item'),
-                onTap: () {},
-              ),
-              ListTile(
-                title: Text('Second Menu Item'),
-                onTap: () {},
-              ),
-              Divider(),
-              ListTile(
-                title: Text('About'),
-                onTap: () {},
+              Expanded(
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: RaisedButton(
+                    onPressed: () {
+                      debugPrint("add");
+                    },
+                    child: Icon(Icons.add),
+                  ),
+                ),
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget getLeftDrawerHeader() {
+    return DrawerHeader(
+      child: Column(
+        children: <Widget>[
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              child: Text(
+                'Labels',
+                textScaleFactor: 1.5,
+                textAlign: TextAlign.left,
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 10.0,
+          ),
+          Align(
+            child: Container(
+              child: Text(
+                "Organize your notes with labels \nIt is super easy with note maker "
+                "\nMake your notes and labels them \nCategorize your notes with labels "
+                "\nEasy to manage, search and organize  ",
+                style: TextStyle(fontWeight: FontWeight.w300),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            alignment: Alignment.center,
+          ),
+        ],
+      ),
+      decoration: BoxDecoration(
+        color: Colors.blue,
+      ),
+    );
+  }
+
+  Widget getLeftDrawerListTile(
+      {@required String title, @required Color color}) {
+    return ListTile(
+      leading: Icon(
+        Icons.book,
+        color: color,
+      ),
+      title: Text("$title"),
+      trailing: Icon(Icons.more_horiz),
+      onTap: () {
+        debugPrint("$title is pressed");
+      },
     );
   }
 
