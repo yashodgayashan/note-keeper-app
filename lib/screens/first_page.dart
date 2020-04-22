@@ -144,14 +144,9 @@ class _MainMenuState extends State<MainMenu> {
           child: ListView(
             children: <Widget>[
               getLeftDrawerHeader(),
-              ListTile(
-                title: Text('First Menu Item'),
-                onTap: () {},
-              ),
-              ListTile(
-                title: Text('Second Menu Item'),
-                onTap: () {},
-              ),
+              getLeftDrawerListTile(title: "First label", color: Colors.yellow),
+              getLeftDrawerListTile(title: "Secont label", color: Colors.blue),
+              RaisedButton(onPressed: (){}, child: Icon(Icons.add),)
             ],
           ),
         ),
@@ -196,6 +191,20 @@ class _MainMenuState extends State<MainMenu> {
     );
   }
 
+  Widget getLeftDrawerListTile(
+      {@required String title, @required Color color}) {
+    return ListTile(
+      leading: Icon(
+        Icons.book,
+        color: color,
+      ),
+      title: Text("$title"),
+      trailing: Icon(Icons.more_horiz),
+      onTap: () {
+        debugPrint("$title is pressed");
+      },
+    );
+  }
 
   Widget getBottomNavigationBar() {
     return BottomAppBar(
