@@ -9,6 +9,7 @@ class Note {
   String _remindTime;
   String _createdTime;
   String _updatedTime;
+  int _category;
 
   /**
    *  Using Notes.createNotes named constructor will be used when a note is created.
@@ -16,13 +17,14 @@ class Note {
    *  remind me value will be false default and the created time will be assigned at the created time
    */
   Note.createNote(
-      {@required String title, String content, int remindMe = 0}) {
+      {@required String title, String content, int remindMe = 0, String remindTime, int category}) {
     this._title = title;
     this._content = content;
     this._remindMe = remindMe;
     this._createdTime = DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now());
     this._updatedTime = DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now());
-    this._remindTime = "";
+    this._remindTime = remindTime;
+    this._category = category;
   }
 
   int get id => _id;
@@ -39,6 +41,8 @@ class Note {
 
   String get updatedTime => _updatedTime;
 
+  int get category => _category;
+
   set title(String newTitle) => this._title = newTitle;
 
   set content(String newContent) => this._content = newContent;
@@ -48,6 +52,8 @@ class Note {
   set remindTime(String newRemindTime) => this._remindTime = newRemindTime;
 
   set updatedTime(String newUpdatedTime) => this._updatedTime = newUpdatedTime;
+
+  set category(int newCategory) => this._category = newCategory;
 
   setRemindTime(DateTime time) {
     remindTime = DateFormat('yyyy-MM-dd – kk:mm').format(time);
@@ -68,6 +74,7 @@ class Note {
     map["remindTime"] = _remindTime;
     map["createdTime"] = _createdTime;
     map["updatedTime"] = _updatedTime;
+    map["category"] = _category;
     return map;
   }
 
@@ -79,5 +86,6 @@ class Note {
     this._remindTime = map["remindTime"];
     this._createdTime = map["createdTime"];
     this._updatedTime = map["updatedTime"];
+    this._category = map["category"];
   }
 }

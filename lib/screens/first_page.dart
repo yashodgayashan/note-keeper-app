@@ -11,6 +11,7 @@ class MainMenu extends StatefulWidget {
 }
 
 class _MainMenuState extends State<MainMenu> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   DatabaseHelper databaseHelper = DatabaseHelper();
   List<Note> noteList;
   int count = 0;
@@ -23,53 +24,175 @@ class _MainMenuState extends State<MainMenu> {
       updateListView();
     }
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Note Maker"),
-      ),
-      endDrawer: SafeArea(
-        child: Container(
-          width: width / 2,
-          child: Drawer(
-            child: ListView(
-              children: <Widget>[
-                DrawerHeader(
-                  child: Text('Header'),
-                ),
-                ListTile(
-                  title: Text('First Menu Item'),
-                  onTap: () {},
-                ),
-                ListTile(
-                  title: Text('Second Menu Item'),
-                  onTap: () {},
-                ),
-                Divider(),
-                ListTile(
-                  title: Text('About'),
-                  onTap: () {},
-                ),
-              ],
+      key: _scaffoldKey,
+      appBar: getAppBar(),
+      endDrawer: getEndDrawer(width),
+      drawer: getDrawer(width),
+      body: getBody(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      floatingActionButton: getFloatingActionButton(),
+      bottomNavigationBar: getBottomNavigationBar(),
+    );
+  }
+
+  Widget getBody() {
+    return ListView(
+      scrollDirection: Axis.vertical,
+      children: <Widget>[
+        getListItem(title: "Note one", color: Colors.green, date: "2020-04-17"),
+        getListItem(title: "Note two", color: Colors.yellow, date: "2020-04-19")
+      ],
+    );
+  }
+
+  Widget getListItem({String title, Color color, String date}) {
+    return Container(
+      margin: EdgeInsets.all(5.0),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey[400]),
+        borderRadius: BorderRadius.all(
+            Radius.circular(10.0) //         <--- border radius here
             ),
+      ),
+      child: ListTile(
+        title: Align(
+          child: Text(title),
+          alignment: Alignment(-1.2, 0),
+        ),
+        subtitle: Align(
+          child: Text("Date : $date"),
+          alignment: Alignment(-1.27, 0),
+        ),
+        leading: IconButton(
+          alignment: Alignment.centerLeft,
+          padding: EdgeInsets.all(0.0),
+          icon: Icon(Icons.book),
+          color: color,
+          onPressed: () {
+            debugPrint("$title clicked");
+          },
+        ),
+        trailing: IconButton(
+          alignment: Alignment.centerRight,
+          padding: EdgeInsets.all(0.0),
+          icon: Icon(Icons.delete_outline),
+          color: Colors.red,
+          onPressed: () {
+            debugPrint("$title deleted");
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget getAppBar() {
+    return AppBar(
+      title: Text("Note Maker"),
+      leading: getAppBarLeadingIcon(),
+      actions: <Widget>[getAppBarEndIcon()],
+    );
+  }
+
+  Widget getAppBarLeadingIcon() {
+    return IconButton(
+      icon: Icon(Icons.menu),
+      onPressed: () => _scaffoldKey.currentState.openDrawer(),
+    );
+  }
+
+  Widget getAppBarEndIcon() {
+    return IconButton(
+        icon: Icon(Icons.filter_list),
+        onPressed: () => _scaffoldKey.currentState.openEndDrawer());
+  }
+
+  Widget getEndDrawer(double width) {
+    return SafeArea(
+      child: Container(
+        width: width / 2,
+        child: Drawer(
+          child: ListView(
+            children: <Widget>[
+              DrawerHeader(
+                child: Text('Header'),
+              ),
+              ListTile(
+                title: Text('First Menu Item'),
+                onTap: () {},
+              ),
+              ListTile(
+                title: Text('Second Menu Item'),
+                onTap: () {},
+              ),
+              Divider(),
+              ListTile(
+                title: Text('About'),
+                onTap: () {},
+              ),
+            ],
           ),
         ),
       ),
-      body: ListView(
-        scrollDirection: Axis.vertical,
+    );
+  }
+
+  Widget getDrawer(double width) {
+    return SafeArea(
+      child: Container(
+        width: width / 2,
+        child: Drawer(
+          child: ListView(
+            children: <Widget>[
+              DrawerHeader(
+                child: Text('Header'),
+              ),
+              ListTile(
+                title: Text('First Menu Item'),
+                onTap: () {},
+              ),
+              ListTile(
+                title: Text('Second Menu Item'),
+                onTap: () {},
+              ),
+              Divider(),
+              ListTile(
+                title: Text('About'),
+                onTap: () {},
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget getBottomNavigationBar() {
+    return BottomAppBar(
+      shape: CircularNotchedRectangle(),
+      notchMargin: 4.0,
+      child: new Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Text("Add list of items Here"),
-          Text("Add list of items Here")
+          Expanded(
+              child: TextFormField(
+            decoration: InputDecoration(
+                labelText: "Search", prefixIcon: Icon(Icons.search)),
+          ))
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+    );
+  }
+
+  Widget getFloatingActionButton() {
+    return FloatingActionButton(
+        child: const Icon(Icons.add),
         onPressed: () {
           debugPrint("Button clicked");
           Navigator.push(context, MaterialPageRoute(builder: (context) {
             return NoteDatails();
           }));
-        },
-      ),
-    );
+        });
   }
 
   void updateListView() {
