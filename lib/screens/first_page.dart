@@ -141,12 +141,32 @@ class _MainMenuState extends State<MainMenu> {
       child: Container(
         width: (3 * width) / 4,
         child: Drawer(
-          child: ListView(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               getLeftDrawerHeader(),
-              getLeftDrawerListTile(title: "First label", color: Colors.yellow),
-              getLeftDrawerListTile(title: "Secont label", color: Colors.blue),
-              RaisedButton(onPressed: (){}, child: Icon(Icons.add),)
+              Container(
+                height: 100.0,
+                child: ListView(
+                  children: <Widget>[
+                    getLeftDrawerListTile(
+                        title: "First label", color: Colors.yellow),
+                    getLeftDrawerListTile(
+                        title: "Secont label", color: Colors.blue),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: RaisedButton(
+                    onPressed: () {
+                      debugPrint("add");
+                    },
+                    child: Icon(Icons.add),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
