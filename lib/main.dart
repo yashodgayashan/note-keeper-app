@@ -13,5 +13,6 @@ void main() => runApp(
           '/notes': (context) => NoteDatails(),
           '/search': (context) => Search(),
         },
+
       ),
     );

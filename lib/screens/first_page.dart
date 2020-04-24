@@ -103,7 +103,7 @@ class _MainMenuState extends State<MainMenu> {
 
   Widget getAppBarEndIcon() {
     return IconButton(
-        icon: Icon(Icons.filter_list),
+        icon: Icon(Icons.settings),
         onPressed: () => _scaffoldKey.currentState.openEndDrawer());
   }
 
@@ -238,7 +238,7 @@ class _MainMenuState extends State<MainMenu> {
         children: <Widget>[
           Expanded(
             child: GestureDetector(
-              onTap: (){
+              onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return Search();
                 }));
