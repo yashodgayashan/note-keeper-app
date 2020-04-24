@@ -252,7 +252,7 @@ class _MainMenuState extends State<MainMenu> {
                   borderRadius: BorderRadius.all(
                     Radius.circular(20.0), //
                   ),
-                  color: Colors.grey[100],
+                  color: Colors.white,
                 ),
                 child: Row(
                   children: <Widget>[
