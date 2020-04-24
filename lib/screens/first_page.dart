@@ -229,6 +229,7 @@ class _MainMenuState extends State<MainMenu> {
 
   Widget getBottomNavigationBar() {
     return BottomAppBar(
+      color: Colors.grey[300],
       shape: CircularNotchedRectangle(),
       notchMargin: 4.0,
       child: new Row(
@@ -236,16 +237,42 @@ class _MainMenuState extends State<MainMenu> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Expanded(
-            child: TextFormField(
-              decoration: InputDecoration(
-                labelText: "Search",
-                prefixIcon: Icon(Icons.search),
-              ),
+            child: GestureDetector(
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return Search();
                 }));
               },
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    width: 1.0,
+                    color: Colors.grey,
+                  ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20.0), //
+                  ),
+                  color: Colors.grey[100],
+                ),
+                child: Row(
+                  children: <Widget>[
+                    Icon(
+                      Icons.search,
+                      color: Colors.grey,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      "Search",
+                      style: TextStyle(fontSize: 18, color: Colors.grey),
+                    ),
+                  ],
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 10.0),
+                height: 40,
+                margin: EdgeInsets.fromLTRB(5.0, 5.0, 80.0, 5.0),
+              ),
             ),
           )
         ],
