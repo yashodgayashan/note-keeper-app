@@ -4,6 +4,7 @@ import 'package:note_maker/models/notes.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
 import 'package:note_maker/screens/notes_detail.dart';
+import 'package:note_maker/screens/search_page.dart';
 
 class MainMenu extends StatefulWidget {
   @override
@@ -235,10 +236,18 @@ class _MainMenuState extends State<MainMenu> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Expanded(
-              child: TextFormField(
-            decoration: InputDecoration(
-                labelText: "Search", prefixIcon: Icon(Icons.search)),
-          ))
+            child: TextFormField(
+              decoration: InputDecoration(
+                labelText: "Search",
+                prefixIcon: Icon(Icons.search),
+              ),
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return Search();
+                }));
+              },
+            ),
+          )
         ],
       ),
     );
