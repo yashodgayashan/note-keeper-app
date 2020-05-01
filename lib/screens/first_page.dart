@@ -148,21 +148,25 @@ class _MainMenuState extends State<MainMenu> {
                 title: Text('Dark theme'),
                 onTap: () {},
               ),
-              Row(
-                children: <Widget>[
-                  Text('Enable'),
-                  Switch(
-                    value: isSwitchedDark,
-                    onChanged: (value) {
-                      setState(() {
-                        isSwitchedDark = value;
-                        print(isSwitchedDark);
-                      });
-                    },
-                    activeTrackColor: Colors.lightBlueAccent,
-                    activeColor: Colors.blue,
-                  ),
-                ],
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0,right: 20.0),
+                child: Row(
+                  children: <Widget>[
+                    Text('Enable'),
+                    Spacer(),
+                    Switch(
+                      value: isSwitchedDark,
+                      onChanged: (value) {
+                        setState(() {
+                          isSwitchedDark = value;
+                          print(isSwitchedDark);
+                        });
+                      },
+                      activeTrackColor: Colors.lightBlueAccent,
+                      activeColor: Colors.blue,
+                    ),
+                  ],
+                ),
               ),
               Divider(),
               ListTile(
