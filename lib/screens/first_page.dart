@@ -115,9 +115,14 @@ class _MainMenuState extends State<MainMenu> {
         child: Drawer(
           child: ListView(
             children: <Widget>[
-              ListTile(
-                title: Text('Sort by'),
-                onTap: () {},
+              Padding(
+                padding: const EdgeInsets.only(left: 15.0,right: 20.0,top: 10.0,bottom: 10.0),
+                child: Text('Sort by',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                    ),
+                ),
               ),
               Row(
                 children: <Widget>[
@@ -144,9 +149,13 @@ class _MainMenuState extends State<MainMenu> {
                 ],
               ),
               Divider(),
-              ListTile(
-                title: Text('Dark theme'),
-                onTap: () {},
+              Padding(
+                padding: const EdgeInsets.only(left: 15.0,right: 20.0,top: 10.0,bottom: 10.0),
+                child: Text('Dark theme',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 20.0,right: 20.0),
