@@ -16,6 +16,7 @@ class _MainMenuState extends State<MainMenu> {
   DatabaseHelper databaseHelper = DatabaseHelper();
   List<Note> noteList;
   int count = 0;
+  bool isSwitchedDark = false;
 
   @override
   Widget build(BuildContext context) {
@@ -114,16 +115,54 @@ class _MainMenuState extends State<MainMenu> {
         child: Drawer(
           child: ListView(
             children: <Widget>[
-              DrawerHeader(
-                child: Text('Header'),
-              ),
               ListTile(
-                title: Text('First Menu Item'),
+                title: Text('Sort by'),
                 onTap: () {},
               ),
+              Row(
+                children: <Widget>[
+                  Radio(
+                    value: 1,
+                    groupValue: 1,
+                    onChanged: (val) {
+                      print('Radio : $val');
+                    },
+                  ),
+                  Text('Date created'),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Radio(
+                    value: 2,
+                    groupValue: 1,
+                    onChanged: (val) {
+                      print('Radio : $val');
+                    },
+                  ),
+                  Text('Date modified'),
+                ],
+              ),
+              Divider(),
               ListTile(
-                title: Text('Second Menu Item'),
+                title: Text('Dark theme'),
                 onTap: () {},
+              ),
+              Row(
+                children: <Widget>[
+                  Text('Enable'),
+                  Switch(
+                    value: isSwitchedDark,
+                    onChanged: (value) {
+                      setState(() {
+                        isSwitchedDark = value;
+                        print(isSwitchedDark);
+                      });
+                    },
+                    activeTrackColor: Colors.lightBlueAccent,
+                    activeColor: Colors.blue,
+                  ),
+                ],
               ),
               Divider(),
               ListTile(
