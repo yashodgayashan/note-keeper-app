@@ -151,6 +151,40 @@ class _MainMenuState extends State<MainMenu> {
               Divider(),
               Padding(
                 padding: const EdgeInsets.only(left: 15.0,right: 20.0,top: 10.0,bottom: 10.0),
+                child: Text('Order by',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+              Row(
+                children: <Widget>[
+                  Radio(
+                    value: 1,
+                    groupValue: 2,
+                    onChanged: (val) {
+                      print('Radio : $val');
+                    },
+                  ),
+                  Text('Ascending'),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Radio(
+                    value: 2,
+                    groupValue: 2,
+                    onChanged: (val) {
+                      print('Radio : $val');
+                    },
+                  ),
+                  Text('Decending'),
+                ],
+              ),
+              Divider(),
+              Padding(
+                padding: const EdgeInsets.only(left: 15.0,right: 20.0,top: 10.0,bottom: 10.0),
                 child: Text('Dark theme',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
