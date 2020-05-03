@@ -18,6 +18,8 @@ class _MainMenuState extends State<MainMenu> {
   List<Note> noteList;
   int count = 0;
 
+  bool editable = false;
+
   // To get whether dark theme is activated.
   bool darkTheme = false;
 
@@ -72,7 +74,8 @@ class _MainMenuState extends State<MainMenu> {
       scrollDirection: Axis.vertical,
       children: <Widget>[
         getNoteItem(title: "Note one", color: Colors.green, date: "2020-04-17"),
-        getNoteItem(title: "Note two", color: Colors.yellow, date: "2020-04-19")
+        getNoteItem(
+            title: "Note two", color: Colors.yellow, date: "2020-04-19"),
       ],
     );
   }
@@ -393,9 +396,16 @@ class _MainMenuState extends State<MainMenu> {
               backgroundColor: Colors.black,
             ),
           ),
-          title: Align(
-            child: Text(title),
-            alignment: Alignment(-1.0, 0),
+          title: TextField(
+            enabled: editable,
+            decoration: InputDecoration(
+                hintText: "Index ", hintStyle: TextStyle(color: Colors.black)),
+            onEditingComplete: () {
+              // After editing is complete, make the editable false
+              setState(() {
+                editable = !editable;
+              });
+            },
           ),
         ),
       ),
