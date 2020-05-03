@@ -16,6 +16,7 @@ class _MainMenuState extends State<MainMenu> {
   DatabaseHelper databaseHelper = DatabaseHelper();
   List<Note> noteList;
   int count = 0;
+  bool darkTheme = false;
 
   @override
   Widget build(BuildContext context) {
@@ -114,16 +115,101 @@ class _MainMenuState extends State<MainMenu> {
         child: Drawer(
           child: ListView(
             children: <Widget>[
-              DrawerHeader(
-                child: Text('Header'),
+              Padding(
+                padding: const EdgeInsets.only(left: 15.0,right: 20.0,top: 10.0,bottom: 10.0),
+                child: Text('Sort by',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                    ),
+                ),
               ),
-              ListTile(
-                title: Text('First Menu Item'),
-                onTap: () {},
+              Row(
+                children: <Widget>[
+                  Radio(
+                    value: 1,
+                    groupValue: 1,
+                    onChanged: (val) {
+                      print('Radio : $val');
+                    },
+                  ),
+                  Text('Date created'),
+                ],
               ),
-              ListTile(
-                title: Text('Second Menu Item'),
-                onTap: () {},
+              Row(
+                children: <Widget>[
+                  Radio(
+                    value: 2,
+                    groupValue: 1,
+                    onChanged: (val) {
+                      print('Radio : $val');
+                    },
+                  ),
+                  Text('Date modified'),
+                ],
+              ),
+              Divider(),
+              Padding(
+                padding: const EdgeInsets.only(left: 15.0,right: 20.0,top: 10.0,bottom: 10.0),
+                child: Text('Order by',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+              Row(
+                children: <Widget>[
+                  Radio(
+                    value: 1,
+                    groupValue: 2,
+                    onChanged: (val) {
+                      print('Radio : $val');
+                    },
+                  ),
+                  Text('Ascending'),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Radio(
+                    value: 2,
+                    groupValue: 2,
+                    onChanged: (val) {
+                      print('Radio : $val');
+                    },
+                  ),
+                  Text('Decending'),
+                ],
+              ),
+              Divider(),
+              Padding(
+                padding: const EdgeInsets.only(left: 15.0,right: 20.0,top: 10.0,bottom: 10.0),
+                child: Text('Dark theme',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0,right: 20.0),
+                child: Row(
+                  children: <Widget>[
+                    Text('Enable'),
+                    Spacer(),
+                    Switch(
+                      value: darkTheme,
+                      onChanged: (value) {
+                        setState(() {
+                          darkTheme = value;
+                          print(darkTheme);
+                        });
+                      },
+                      activeTrackColor: Colors.lightBlueAccent,
+                      activeColor: Colors.blue,
+                    ),
+                  ],
+                ),
               ),
               Divider(),
               ListTile(
