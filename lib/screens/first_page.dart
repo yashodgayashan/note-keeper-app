@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:note_maker/utils/database_helper.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:note_maker/models/notes.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
@@ -298,9 +299,19 @@ class _MainMenuState extends State<MainMenu> {
             children: <Widget>[
               getLeftDrawerHeader(),
               Container(
-                height: 100.0,
+                height: 300.0,
                 child: ListView(
                   children: <Widget>[
+                    ListTile(
+                      title: Align(
+                        child: Text("All Notes"),
+                        alignment: Alignment(-1.0, 0),
+                      ),
+                      onTap: () {
+                        debugPrint("Get all");
+                      },
+                    ),
+                    Divider(),
                     getCategories(title: "First label", color: Colors.yellow),
                     getCategories(title: "Secont label", color: Colors.blue),
                   ],
@@ -364,16 +375,48 @@ class _MainMenuState extends State<MainMenu> {
 
   // This widget outputs the categories for the left drawer.
   Widget getCategories({@required String title, @required Color color}) {
-    return ListTile(
-      leading: Icon(
-        Icons.book,
-        color: color,
+    return Slidable(
+      actionPane: SlidableBehindActionPane(),
+      actionExtentRatio: 0.25,
+      child: Container(
+        child: ListTile(
+          leading: GestureDetector(
+            onLongPress: () {
+              debugPrint("Long press");
+            },
+            child: CircleAvatar(
+              radius: 16,
+              child: CircleAvatar(
+                radius: 14,
+                backgroundColor: color,
+              ),
+              backgroundColor: Colors.black,
+            ),
+          ),
+          title: Align(
+            child: Text(title),
+            alignment: Alignment(-1.0, 0),
+          ),
+        ),
       ),
-      title: Text("$title"),
-      trailing: Icon(Icons.more_horiz),
-      onTap: () {
-        debugPrint("$title is pressed");
-      },
+      secondaryActions: <Widget>[
+        IconSlideAction(
+          caption: 'Edit',
+          color: Colors.blueAccent,
+          icon: Icons.edit,
+          onTap: () {
+            debugPrint("More $title");
+          },
+        ),
+        IconSlideAction(
+          caption: 'Delete',
+          color: Colors.red,
+          icon: Icons.delete,
+          onTap: () {
+            debugPrint("Delete $title");
+          },
+        ),
+      ],
     );
   }
 
