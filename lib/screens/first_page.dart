@@ -24,9 +24,15 @@ class _MainMenuState extends State<MainMenu> {
   int sortBy;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
+    sortBy = 0;
+  }
 
+  setSortBy(int val) {
+    setState(() {
+      sortBy = val;
+    });
   }
 
   @override
@@ -143,30 +149,7 @@ class _MainMenuState extends State<MainMenu> {
                   ),
                 ),
               ),
-              Row(
-                children: <Widget>[
-                  Radio(
-                    value: 1,
-                    groupValue: 1,
-                    onChanged: (val) {
-                      print('Radio : $val');
-                    },
-                  ),
-                  Text('Date created'),
-                ],
-              ),
-              Row(
-                children: <Widget>[
-                  Radio(
-                    value: 2,
-                    groupValue: 1,
-                    onChanged: (val) {
-                      print('Radio : $val');
-                    },
-                  ),
-                  Text('Date modified'),
-                ],
-              ),
+              getSortByWidget(),
               Divider(),
               Padding(
                 padding: const EdgeInsets.only(
@@ -221,6 +204,43 @@ class _MainMenuState extends State<MainMenu> {
     );
   }
 
+  // This widget outputs the sort by section for left drawer.
+  Widget getSortByWidget() {
+    return Column(
+      children: <Widget>[
+        RadioListTile(
+          value: 1,
+          groupValue: sortBy,
+          onChanged: (val) {
+            debugPrint("clicke $val");
+            setSortBy(val);
+          },
+          title: Text("Name"),
+          activeColor: Colors.blue,
+        ),
+        RadioListTile(
+          value: 2,
+          groupValue: sortBy,
+          onChanged: (val) {
+            debugPrint("clicke $val");
+            setSortBy(val);
+          },
+          title: Text("Date Created"),
+        ),
+        RadioListTile(
+          value: 3,
+          groupValue: sortBy,
+          onChanged: (val) {
+            debugPrint("clicke $val");
+            setSortBy(val);
+          },
+          title: Text("Date motified"),
+          activeColor: Colors.blue,
+        )
+      ],
+    );
+  }
+
   // This widget outputs dark theme Component in the left drawer.
   Widget getDarkThemeWidget() {
     return Padding(
@@ -271,10 +291,8 @@ class _MainMenuState extends State<MainMenu> {
                 height: 100.0,
                 child: ListView(
                   children: <Widget>[
-                    getLeftDrawerListTile(
-                        title: "First label", color: Colors.yellow),
-                    getLeftDrawerListTile(
-                        title: "Secont label", color: Colors.blue),
+                    getCategories(title: "First label", color: Colors.yellow),
+                    getCategories(title: "Secont label", color: Colors.blue),
                   ],
                 ),
               ),
@@ -334,9 +352,8 @@ class _MainMenuState extends State<MainMenu> {
     );
   }
 
-  // This widget outputs the categories for the left darwer.
-  Widget getLeftDrawerListTile(
-      {@required String title, @required Color color}) {
+  // This widget outputs the categories for the left drawer.
+  Widget getCategories({@required String title, @required Color color}) {
     return ListTile(
       leading: Icon(
         Icons.book,
