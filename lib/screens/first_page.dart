@@ -16,7 +16,18 @@ class _MainMenuState extends State<MainMenu> {
   DatabaseHelper databaseHelper = DatabaseHelper();
   List<Note> noteList;
   int count = 0;
+
+  // To get whether dark theme is activated.
   bool darkTheme = false;
+
+  // To get the sort by value.
+  int sortBy;
+
+  @override
+  void initState(){
+    super.initState();
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,26 +39,28 @@ class _MainMenuState extends State<MainMenu> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: getAppBar(),
-      endDrawer: getEndDrawer(width),
-      drawer: getDrawer(width),
+      endDrawer: getRightDrawer(width),
+      drawer: getLeftDrawer(width),
       body: getBody(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: getFloatingActionButton(),
-      bottomNavigationBar: getBottomNavigationBar(),
+      bottomNavigationBar: getBottomAppBar(),
     );
   }
 
+  // This widget outputs the body of the scaffold.
   Widget getBody() {
     return ListView(
       scrollDirection: Axis.vertical,
       children: <Widget>[
-        getListItem(title: "Note one", color: Colors.green, date: "2020-04-17"),
-        getListItem(title: "Note two", color: Colors.yellow, date: "2020-04-19")
+        getNoteItem(title: "Note one", color: Colors.green, date: "2020-04-17"),
+        getNoteItem(title: "Note two", color: Colors.yellow, date: "2020-04-19")
       ],
     );
   }
 
-  Widget getListItem({String title, Color color, String date}) {
+  // This widget output a note item.
+  Widget getNoteItem({String title, Color color, String date}) {
     return Container(
       margin: EdgeInsets.all(5.0),
       decoration: BoxDecoration(
@@ -87,14 +100,16 @@ class _MainMenuState extends State<MainMenu> {
     );
   }
 
+  // This widget outputs the app bar for the scaffold.
   Widget getAppBar() {
     return AppBar(
       title: Text("Note Maker"),
       leading: getAppBarLeadingIcon(),
-      actions: <Widget>[getAppBarEndIcon()],
+      actions: <Widget>[getAppBarTrailingIcon()],
     );
   }
 
+  // This widget outputs the left icon of the app bar.
   Widget getAppBarLeadingIcon() {
     return IconButton(
       icon: Icon(Icons.menu),
@@ -102,13 +117,15 @@ class _MainMenuState extends State<MainMenu> {
     );
   }
 
-  Widget getAppBarEndIcon() {
+  // This widget outputs the right icon of the app bar.
+  Widget getAppBarTrailingIcon() {
     return IconButton(
         icon: Icon(Icons.settings),
         onPressed: () => _scaffoldKey.currentState.openEndDrawer());
   }
 
-  Widget getEndDrawer(double width) {
+  // This widget outputs the right drawer.
+  Widget getRightDrawer(double width) {
     return SafeArea(
       child: Container(
         width: width / 2,
@@ -116,12 +133,14 @@ class _MainMenuState extends State<MainMenu> {
           child: ListView(
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(left: 15.0,right: 20.0,top: 10.0,bottom: 10.0),
-                child: Text('Sort by',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
-                    ),
+                padding: const EdgeInsets.only(
+                    left: 15.0, right: 20.0, top: 10.0, bottom: 10.0),
+                child: Text(
+                  'Sort by',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
                 ),
               ),
               Row(
@@ -150,8 +169,10 @@ class _MainMenuState extends State<MainMenu> {
               ),
               Divider(),
               Padding(
-                padding: const EdgeInsets.only(left: 15.0,right: 20.0,top: 10.0,bottom: 10.0),
-                child: Text('Order by',
+                padding: const EdgeInsets.only(
+                    left: 15.0, right: 20.0, top: 10.0, bottom: 10.0),
+                child: Text(
+                  'Order by',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 15,
@@ -183,38 +204,15 @@ class _MainMenuState extends State<MainMenu> {
                 ],
               ),
               Divider(),
-              Padding(
-                padding: const EdgeInsets.only(left: 15.0,right: 20.0,top: 10.0,bottom: 10.0),
-                child: Text('Dark theme',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 20.0,right: 20.0),
-                child: Row(
-                  children: <Widget>[
-                    Text('Enable'),
-                    Spacer(),
-                    Switch(
-                      value: darkTheme,
-                      onChanged: (value) {
-                        setState(() {
-                          darkTheme = value;
-                          print(darkTheme);
-                        });
-                      },
-                      activeTrackColor: Colors.lightBlueAccent,
-                      activeColor: Colors.blue,
-                    ),
-                  ],
-                ),
-              ),
+              getDarkThemeWidget(),
+              getDarkThemeSwitch(),
               Divider(),
-              ListTile(
-                title: Text('About'),
-                onTap: () {},
+              Align(
+                alignment: Alignment.bottomLeft,
+                child: ListTile(
+                  title: Text('About'),
+                  onTap: () {},
+                ),
               ),
             ],
           ),
@@ -223,7 +221,44 @@ class _MainMenuState extends State<MainMenu> {
     );
   }
 
-  Widget getDrawer(double width) {
+  // This widget outputs dark theme Component in the left drawer.
+  Widget getDarkThemeWidget() {
+    return Padding(
+      padding: const EdgeInsets.only(
+          left: 15.0, right: 20.0, top: 10.0, bottom: 10.0),
+      child: Text(
+        'Dark theme',
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+      ),
+    );
+  }
+
+  // This widget outputs the enable switch for the darkThemeWidget.
+  Widget getDarkThemeSwitch() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+      child: Row(
+        children: <Widget>[
+          Text('Enable'),
+          Spacer(),
+          Switch(
+            value: darkTheme,
+            onChanged: (value) {
+              setState(() {
+                darkTheme = value;
+                print(darkTheme);
+              });
+            },
+            activeTrackColor: Colors.lightBlueAccent,
+            activeColor: Colors.blue,
+          ),
+        ],
+      ),
+    );
+  }
+
+  // This widget outputs the left drawer.
+  Widget getLeftDrawer(double width) {
     return SafeArea(
       child: Container(
         width: (3 * width) / 4,
@@ -261,6 +296,7 @@ class _MainMenuState extends State<MainMenu> {
     );
   }
 
+  // This widget outputs the left drawer header.
   Widget getLeftDrawerHeader() {
     return DrawerHeader(
       child: Column(
@@ -298,6 +334,7 @@ class _MainMenuState extends State<MainMenu> {
     );
   }
 
+  // This widget outputs the categories for the left darwer.
   Widget getLeftDrawerListTile(
       {@required String title, @required Color color}) {
     return ListTile(
@@ -313,7 +350,8 @@ class _MainMenuState extends State<MainMenu> {
     );
   }
 
-  Widget getBottomNavigationBar() {
+  // This widget outputs the bottom app bar.
+  Widget getBottomAppBar() {
     return BottomAppBar(
       color: Colors.grey[300],
       shape: CircularNotchedRectangle(),
@@ -366,6 +404,7 @@ class _MainMenuState extends State<MainMenu> {
     );
   }
 
+  // This widget outputs the floating action button for adding notes.
   Widget getFloatingActionButton() {
     return FloatingActionButton(
         child: const Icon(Icons.add),
