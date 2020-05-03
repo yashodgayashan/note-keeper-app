@@ -16,7 +16,7 @@ class _MainMenuState extends State<MainMenu> {
   DatabaseHelper databaseHelper = DatabaseHelper();
   List<Note> noteList;
   int count = 0;
-  bool isSwitchedDark = false;
+  bool darkTheme = false;
 
   @override
   Widget build(BuildContext context) {
@@ -198,11 +198,11 @@ class _MainMenuState extends State<MainMenu> {
                     Text('Enable'),
                     Spacer(),
                     Switch(
-                      value: isSwitchedDark,
+                      value: darkTheme,
                       onChanged: (value) {
                         setState(() {
-                          isSwitchedDark = value;
-                          print(isSwitchedDark);
+                          darkTheme = value;
+                          print(darkTheme);
                         });
                       },
                       activeTrackColor: Colors.lightBlueAccent,
