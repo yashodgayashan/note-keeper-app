@@ -23,15 +23,26 @@ class _MainMenuState extends State<MainMenu> {
   // To get the sort by value.
   int sortBy;
 
+  // To get the order by value.
+  int orderBy;
+
   @override
   void initState() {
     super.initState();
     sortBy = 0;
   }
 
+  // Set sortBy value.
   setSortBy(int val) {
     setState(() {
       sortBy = val;
+    });
+  }
+
+  // Set orderBy value.
+  setOrderBy(int val) {
+    setState(() {
+      orderBy = val;
     });
   }
 
@@ -134,69 +145,14 @@ class _MainMenuState extends State<MainMenu> {
   Widget getRightDrawer(double width) {
     return SafeArea(
       child: Container(
-        width: width / 2,
+        width: 3 * width / 5,
         child: Drawer(
           child: ListView(
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: 15.0, right: 20.0, top: 10.0, bottom: 10.0),
-                child: Text(
-                  'Sort by',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
-                  ),
-                ),
-              ),
               getSortByWidget(),
-              Divider(),
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: 15.0, right: 20.0, top: 10.0, bottom: 10.0),
-                child: Text(
-                  'Order by',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
-                  ),
-                ),
-              ),
-              Row(
-                children: <Widget>[
-                  Radio(
-                    value: 1,
-                    groupValue: 2,
-                    onChanged: (val) {
-                      print('Radio : $val');
-                    },
-                  ),
-                  Text('Ascending'),
-                ],
-              ),
-              Row(
-                children: <Widget>[
-                  Radio(
-                    value: 2,
-                    groupValue: 2,
-                    onChanged: (val) {
-                      print('Radio : $val');
-                    },
-                  ),
-                  Text('Decending'),
-                ],
-              ),
-              Divider(),
+              getOrderByWidget(),
               getDarkThemeWidget(),
-              getDarkThemeSwitch(),
-              Divider(),
-              Align(
-                alignment: Alignment.bottomLeft,
-                child: ListTile(
-                  title: Text('About'),
-                  onTap: () {},
-                ),
-              ),
+              Divider()
             ],
           ),
         ),
@@ -204,10 +160,20 @@ class _MainMenuState extends State<MainMenu> {
     );
   }
 
-  // This widget outputs the sort by section for left drawer.
+  // This widget outputs the sort by section for right drawer.
   Widget getSortByWidget() {
     return Column(
       children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(right: 100.0, top: 10.0, bottom: 10.0),
+          child: Text(
+            'Sort by',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+            ),
+          ),
+        ),
         RadioListTile(
           value: 1,
           groupValue: sortBy,
@@ -236,20 +202,64 @@ class _MainMenuState extends State<MainMenu> {
           },
           title: Text("Date motified"),
           activeColor: Colors.blue,
-        )
+        ),
+        Divider(),
       ],
     );
   }
 
-  // This widget outputs dark theme Component in the left drawer.
+  // This widget outputs the order by section for right drawer.
+  Widget getOrderByWidget() {
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(right: 100.0, top: 10.0, bottom: 10.0),
+          child: Text(
+            'Order by',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+            ),
+          ),
+        ),
+        RadioListTile(
+          value: 1,
+          groupValue: orderBy,
+          onChanged: (val) {
+            debugPrint("clicke $val");
+            setOrderBy(val);
+          },
+          title: Text("Ascending"),
+          activeColor: Colors.blue,
+        ),
+        RadioListTile(
+          value: 2,
+          groupValue: orderBy,
+          onChanged: (val) {
+            debugPrint("clicke $val");
+            setOrderBy(val);
+          },
+          title: Text("Decending"),
+          activeColor: Colors.blue,
+        ),
+        Divider(),
+      ],
+    );
+  }
+
+  // This widget outputs dark theme Component in the right drawer.
   Widget getDarkThemeWidget() {
-    return Padding(
-      padding: const EdgeInsets.only(
-          left: 15.0, right: 20.0, top: 10.0, bottom: 10.0),
-      child: Text(
-        'Dark theme',
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-      ),
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(right: 100.0, top: 10.0, bottom: 10.0),
+          child: Text(
+            'Dark theme',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+          ),
+        ),
+        getDarkThemeSwitch(),
+      ],
     );
   }
 
