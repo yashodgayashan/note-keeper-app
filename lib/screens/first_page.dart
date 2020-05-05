@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:note_maker/utils/database_helper.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:note_maker/models/notes.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
@@ -16,7 +17,37 @@ class _MainMenuState extends State<MainMenu> {
   DatabaseHelper databaseHelper = DatabaseHelper();
   List<Note> noteList;
   int count = 0;
+
+  bool editable = false;
+
+  // To get whether dark theme is activated.
   bool darkTheme = false;
+
+  // To get the sort by value.
+  int sortBy;
+
+  // To get the order by value.
+  int orderBy;
+
+  @override
+  void initState() {
+    super.initState();
+    sortBy = 0;
+  }
+
+  // Set sortBy value.
+  setSortBy(int val) {
+    setState(() {
+      sortBy = val;
+    });
+  }
+
+  // Set orderBy value.
+  setOrderBy(int val) {
+    setState(() {
+      orderBy = val;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,26 +59,29 @@ class _MainMenuState extends State<MainMenu> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: getAppBar(),
-      endDrawer: getEndDrawer(width),
-      drawer: getDrawer(width),
+      endDrawer: getRightDrawer(width),
+      drawer: getLeftDrawer(width),
       body: getBody(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: getFloatingActionButton(),
-      bottomNavigationBar: getBottomNavigationBar(),
+      bottomNavigationBar: getBottomAppBar(),
     );
   }
 
+  // This widget outputs the body of the scaffold.
   Widget getBody() {
     return ListView(
       scrollDirection: Axis.vertical,
       children: <Widget>[
-        getListItem(title: "Note one", color: Colors.green, date: "2020-04-17"),
-        getListItem(title: "Note two", color: Colors.yellow, date: "2020-04-19")
+        getNoteItem(title: "Note one", color: Colors.green, date: "2020-04-17"),
+        getNoteItem(
+            title: "Note two", color: Colors.yellow, date: "2020-04-19"),
       ],
     );
   }
 
-  Widget getListItem({String title, Color color, String date}) {
+  // This widget output a note item.
+  Widget getNoteItem({String title, Color color, String date}) {
     return Container(
       margin: EdgeInsets.all(5.0),
       decoration: BoxDecoration(
@@ -87,14 +121,16 @@ class _MainMenuState extends State<MainMenu> {
     );
   }
 
+  // This widget outputs the app bar for the scaffold.
   Widget getAppBar() {
     return AppBar(
       title: Text("Note Maker"),
       leading: getAppBarLeadingIcon(),
-      actions: <Widget>[getAppBarEndIcon()],
+      actions: <Widget>[getAppBarTrailingIcon()],
     );
   }
 
+  // This widget outputs the left icon of the app bar.
   Widget getAppBarLeadingIcon() {
     return IconButton(
       icon: Icon(Icons.menu),
@@ -102,120 +138,25 @@ class _MainMenuState extends State<MainMenu> {
     );
   }
 
-  Widget getAppBarEndIcon() {
+  // This widget outputs the right icon of the app bar.
+  Widget getAppBarTrailingIcon() {
     return IconButton(
         icon: Icon(Icons.settings),
         onPressed: () => _scaffoldKey.currentState.openEndDrawer());
   }
 
-  Widget getEndDrawer(double width) {
+  // This widget outputs the right drawer.
+  Widget getRightDrawer(double width) {
     return SafeArea(
       child: Container(
-        width: width / 2,
+        width: 3 * width / 5,
         child: Drawer(
           child: ListView(
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(left: 15.0,right: 20.0,top: 10.0,bottom: 10.0),
-                child: Text('Sort by',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
-                    ),
-                ),
-              ),
-              Row(
-                children: <Widget>[
-                  Radio(
-                    value: 1,
-                    groupValue: 1,
-                    onChanged: (val) {
-                      print('Radio : $val');
-                    },
-                  ),
-                  Text('Date created'),
-                ],
-              ),
-              Row(
-                children: <Widget>[
-                  Radio(
-                    value: 2,
-                    groupValue: 1,
-                    onChanged: (val) {
-                      print('Radio : $val');
-                    },
-                  ),
-                  Text('Date modified'),
-                ],
-              ),
-              Divider(),
-              Padding(
-                padding: const EdgeInsets.only(left: 15.0,right: 20.0,top: 10.0,bottom: 10.0),
-                child: Text('Order by',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
-                  ),
-                ),
-              ),
-              Row(
-                children: <Widget>[
-                  Radio(
-                    value: 1,
-                    groupValue: 2,
-                    onChanged: (val) {
-                      print('Radio : $val');
-                    },
-                  ),
-                  Text('Ascending'),
-                ],
-              ),
-              Row(
-                children: <Widget>[
-                  Radio(
-                    value: 2,
-                    groupValue: 2,
-                    onChanged: (val) {
-                      print('Radio : $val');
-                    },
-                  ),
-                  Text('Decending'),
-                ],
-              ),
-              Divider(),
-              Padding(
-                padding: const EdgeInsets.only(left: 15.0,right: 20.0,top: 10.0,bottom: 10.0),
-                child: Text('Dark theme',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 20.0,right: 20.0),
-                child: Row(
-                  children: <Widget>[
-                    Text('Enable'),
-                    Spacer(),
-                    Switch(
-                      value: darkTheme,
-                      onChanged: (value) {
-                        setState(() {
-                          darkTheme = value;
-                          print(darkTheme);
-                        });
-                      },
-                      activeTrackColor: Colors.lightBlueAccent,
-                      activeColor: Colors.blue,
-                    ),
-                  ],
-                ),
-              ),
-              Divider(),
-              ListTile(
-                title: Text('About'),
-                onTap: () {},
-              ),
+              getSortByWidget(),
+              getOrderByWidget(),
+              getDarkThemeWidget(),
+              Divider()
             ],
           ),
         ),
@@ -223,7 +164,135 @@ class _MainMenuState extends State<MainMenu> {
     );
   }
 
-  Widget getDrawer(double width) {
+  // This widget outputs the sort by section for right drawer.
+  Widget getSortByWidget() {
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(right: 100.0, top: 10.0, bottom: 10.0),
+          child: Text(
+            'Sort by',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+            ),
+          ),
+        ),
+        RadioListTile(
+          value: 1,
+          groupValue: sortBy,
+          onChanged: (val) {
+            debugPrint("clicke $val");
+            setSortBy(val);
+          },
+          title: Text("Name"),
+          activeColor: Colors.blue,
+        ),
+        RadioListTile(
+          value: 2,
+          groupValue: sortBy,
+          onChanged: (val) {
+            debugPrint("clicke $val");
+            setSortBy(val);
+          },
+          title: Text("Date Created"),
+        ),
+        RadioListTile(
+          value: 3,
+          groupValue: sortBy,
+          onChanged: (val) {
+            debugPrint("clicke $val");
+            setSortBy(val);
+          },
+          title: Text("Date motified"),
+          activeColor: Colors.blue,
+        ),
+        Divider(),
+      ],
+    );
+  }
+
+  // This widget outputs the order by section for right drawer.
+  Widget getOrderByWidget() {
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(right: 100.0, top: 10.0, bottom: 10.0),
+          child: Text(
+            'Order by',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+            ),
+          ),
+        ),
+        RadioListTile(
+          value: 1,
+          groupValue: orderBy,
+          onChanged: (val) {
+            debugPrint("clicke $val");
+            setOrderBy(val);
+          },
+          title: Text("Ascending"),
+          activeColor: Colors.blue,
+        ),
+        RadioListTile(
+          value: 2,
+          groupValue: orderBy,
+          onChanged: (val) {
+            debugPrint("clicke $val");
+            setOrderBy(val);
+          },
+          title: Text("Decending"),
+          activeColor: Colors.blue,
+        ),
+        Divider(),
+      ],
+    );
+  }
+
+  // This widget outputs dark theme Component in the right drawer.
+  Widget getDarkThemeWidget() {
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(right: 100.0, top: 10.0, bottom: 10.0),
+          child: Text(
+            'Dark theme',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+          ),
+        ),
+        getDarkThemeSwitch(),
+      ],
+    );
+  }
+
+  // This widget outputs the enable switch for the darkThemeWidget.
+  Widget getDarkThemeSwitch() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+      child: Row(
+        children: <Widget>[
+          Text('Enable'),
+          Spacer(),
+          Switch(
+            value: darkTheme,
+            onChanged: (value) {
+              setState(() {
+                darkTheme = value;
+                print(darkTheme);
+              });
+            },
+            activeTrackColor: Colors.lightBlueAccent,
+            activeColor: Colors.blue,
+          ),
+        ],
+      ),
+    );
+  }
+
+  // This widget outputs the left drawer.
+  Widget getLeftDrawer(double width) {
     return SafeArea(
       child: Container(
         width: (3 * width) / 4,
@@ -233,13 +302,21 @@ class _MainMenuState extends State<MainMenu> {
             children: <Widget>[
               getLeftDrawerHeader(),
               Container(
-                height: 100.0,
+                height: 300.0,
                 child: ListView(
                   children: <Widget>[
-                    getLeftDrawerListTile(
-                        title: "First label", color: Colors.yellow),
-                    getLeftDrawerListTile(
-                        title: "Secont label", color: Colors.blue),
+                    ListTile(
+                      title: Align(
+                        child: Text("All Notes"),
+                        alignment: Alignment(-1.0, 0),
+                      ),
+                      onTap: () {
+                        debugPrint("Get all");
+                      },
+                    ),
+                    Divider(),
+                    getCategories(title: "First label", color: Colors.yellow),
+                    getCategories(title: "Secont label", color: Colors.blue),
                   ],
                 ),
               ),
@@ -261,6 +338,7 @@ class _MainMenuState extends State<MainMenu> {
     );
   }
 
+  // This widget outputs the left drawer header.
   Widget getLeftDrawerHeader() {
     return DrawerHeader(
       child: Column(
@@ -298,22 +376,62 @@ class _MainMenuState extends State<MainMenu> {
     );
   }
 
-  Widget getLeftDrawerListTile(
-      {@required String title, @required Color color}) {
-    return ListTile(
-      leading: Icon(
-        Icons.book,
-        color: color,
+  // This widget outputs the categories for the left drawer.
+  Widget getCategories({@required String title, @required Color color}) {
+    return Slidable(
+      actionPane: SlidableBehindActionPane(),
+      actionExtentRatio: 0.25,
+      child: Container(
+        child: ListTile(
+          leading: GestureDetector(
+            onLongPress: () {
+              debugPrint("Long press");
+            },
+            child: CircleAvatar(
+              radius: 16,
+              child: CircleAvatar(
+                radius: 14,
+                backgroundColor: color,
+              ),
+              backgroundColor: Colors.black,
+            ),
+          ),
+          title: TextField(
+            enabled: editable,
+            decoration: InputDecoration(
+                hintText: "Index ", hintStyle: TextStyle(color: Colors.black)),
+            onEditingComplete: () {
+              // After editing is complete, make the editable false
+              setState(() {
+                editable = !editable;
+              });
+            },
+          ),
+        ),
       ),
-      title: Text("$title"),
-      trailing: Icon(Icons.more_horiz),
-      onTap: () {
-        debugPrint("$title is pressed");
-      },
+      secondaryActions: <Widget>[
+        IconSlideAction(
+          caption: 'Edit',
+          color: Colors.blueAccent,
+          icon: Icons.edit,
+          onTap: () {
+            debugPrint("More $title");
+          },
+        ),
+        IconSlideAction(
+          caption: 'Delete',
+          color: Colors.red,
+          icon: Icons.delete,
+          onTap: () {
+            debugPrint("Delete $title");
+          },
+        ),
+      ],
     );
   }
 
-  Widget getBottomNavigationBar() {
+  // This widget outputs the bottom app bar.
+  Widget getBottomAppBar() {
     return BottomAppBar(
       color: Colors.grey[300],
       shape: CircularNotchedRectangle(),
@@ -366,6 +484,7 @@ class _MainMenuState extends State<MainMenu> {
     );
   }
 
+  // This widget outputs the floating action button for adding notes.
   Widget getFloatingActionButton() {
     return FloatingActionButton(
         child: const Icon(Icons.add),
